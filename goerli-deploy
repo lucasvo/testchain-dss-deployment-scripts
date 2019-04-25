@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+set -ex
+
+# Remove ./out folder
+rm -rf ./out
+
+export ETH_GAS=${ETH_GAS:-"7000000"}
+
+test "$(seth chain)" = "goerli" || exit 1
+
+# Get config variables
+export CONFIG_STEP=goerli
+CONFIG_FILE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )/${CONFIG_STEP}.json"
+
+# Set verify contract option in Etherscan if the API key is in the config file
+etherscanApiKey=$(jq -r ".etherscanApiKey" "$CONFIG_FILE")
+if [ "$etherscanApiKey" != "" ]; then
+    export DAPP_VERIFY_CONTRACT="yes"
+    export ETHERSCAN_API_KEY=$etherscanApiKey
+fi
+
+tokens=$(jq -r ".tokens | keys_unsorted[]" "$CONFIG_FILE")
+for token in $tokens; do
+    eval export "\PIP_${token}=$(jq -r ".tokens.${token} | .pip" "$CONFIG_FILE")"
+done
+
+# shellcheck source=/dev/null
+./base-deploy
+
+# shellcheck source=/dev/null
+./poll-deploy
+
+# shellcheck source=/dev/null
+./set-ilks-mat
+
+# shellcheck source=/dev/null
+./set-ilks-spell-line
+
+# shellcheck source=/dev/null
+./set-ilks-duty
+
+# shellcheck source=/dev/null
+./set-ilks-pip-whitelist
+
+# shellcheck source=/dev/null
+./set-ilks-spotter-poke
+
+# shellcheck source=/dev/null
+./set-pause-delay
+
+echo "GOERLI DEPLOYMENT COMPLETED SUCCESSFULLY"
