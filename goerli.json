@@ -1,0 +1,78 @@
+{
+  "description": "Goerli deployment",
+  "etherscanApiKey": "4PDDUF52BTUD32C3RJ7RJXRY7KIJFJ38RY",
+  "pauseDelay": "300",
+  "line": "1000000",
+  "tokens": {
+    "ETH": {
+      "pip": "0x8C73Ec0fBCdEC6b8C060BC224D94740FD41f3774",
+      "ilks":{
+        "A": {
+          "mat": "150",
+          "line": "300000",
+          "duty": "2.5"
+        },
+        "B": {
+          "mat": "200",
+          "line": "100000",
+          "duty": "1.5"
+        },
+        "C": {
+          "mat": "250",
+          "line": "100000",
+          "duty": "0.5"
+        }
+      }
+    },
+    "COL1": {
+      "pip": "0xF2643546d27c8a5388D9Be48170d74b9c9Be39a6",
+      "ilks":{
+        "A": {
+          "mat": "180",
+          "line": "200000",
+          "duty": "2"
+        }
+      }
+    },
+    "COL2": {
+      "pip": "0x8Df8f06DC2dE0434db40dcBb32a82A104218754c",
+      "ilks":{
+        "A": {
+          "mat": "170",
+          "line": "200000",
+          "duty": "3"
+        }
+      }
+    },
+    "COL3": {
+      "pip": "0xaa32EB42CBf3Bdb746b659c8DAF443f710497d80",
+      "ilks":{
+        "A": {
+          "mat": "160",
+          "line": "300000",
+          "duty": "4"
+        }
+      }
+    },
+    "COL4": {
+      "pip": "0xc9eb67DA2d05702459C521CE3BFED097cB490F8b",
+      "ilks":{
+        "A": {
+          "mat": "200",
+          "line": "100000",
+          "duty": "1.5"
+        }
+      }
+    },
+    "COL5": {
+      "pip": "0xA53e6EFB4cBeD841Eace02220498860905E94998",
+      "ilks":{
+        "A": {
+          "mat": "190",
+          "line": "200000",
+          "duty": "1.8"
+        }
+      }
+    }
+  }
+}
