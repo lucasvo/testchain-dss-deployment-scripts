@@ -2,6 +2,8 @@
 
 # Set fail flags
 set -eo pipefail
+# Start verbose output
+set -x
 
 BIN_DIR=${BIN_DIR:-$(cd "${BASH_SOURCE[0]%/*}/.."&&pwd)}
 LIB_DIR=${LIB_DIR:-$BIN_DIR/lib}
@@ -47,7 +49,3 @@ addAddresses() {
     result=$(jq -s add "$OUT_DIR/addresses.json" /dev/stdin)
     printf %s "$result" > "$OUT_DIR/addresses.json"
 }
-
-
-# Start verbose output
-set -x

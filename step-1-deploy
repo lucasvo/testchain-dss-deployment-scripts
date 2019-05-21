@@ -15,6 +15,8 @@ dapp build
 cd "$DAPP_LIB/testchain-medians"
 dapp build
 
+echo >&2 ===== GAS LIMIT SET TO: $ETH_GAS =====
+
 tokens=$(jq -r ".tokens | keys_unsorted[]" "$CONFIG_FILE")
 for token in $tokens; do
     type=$(jq -r ".tokens.${token} | .pip | .type" "$CONFIG_FILE")
