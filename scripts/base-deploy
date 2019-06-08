@@ -35,6 +35,9 @@ export MCD_PAUSE_DELAY=0
 unset MCD_ADM
 
 # Deploy MCD Core Contratcs (solc optimized)
+MCD_GOV=$(dappCreate ds-chief DSToken "$(seth --to-bytes32 "$(seth --from-ascii "MKR")")")
+export MCD_GOV
+
 deploy-core
 # shellcheck source=/dev/null
 . "load-mcd-$(seth chain)"
@@ -94,6 +97,12 @@ dappBuild ds-chief
 if [[ -z "$MCD_GOV" ]]; then
     MCD_GOV=$(dappCreate ds-chief DSToken "$(seth --to-bytes32 "$(seth --from-ascii "MKR")")")
     export MCD_GOV
+    seth send "$MCD_GOV" 'mint(address,uint256)' "$FAUCET" "$(seth --to-uint256 "$(seth --to-wei 1000000 ETH)")"
+    seth send "$MCD_GOV" 'setAuthority(address)' "$MCD_GOV_GUARD"
+    seth send "$FAUCET" 'gulp(address)' "$MCD_GOV"
+    # Allow Flop to mint Gov token
+    seth send "$MCD_GOV_GUARD" 'permit(address,address,bytes32)' "$MCD_FLOP" "$MCD_GOV" "$(seth --to-bytes32 "$(seth sig 'mint(address,uint256)')")"
+else
     seth send "$MCD_GOV" 'mint(address,uint256)' "$FAUCET" "$(seth --to-uint256 "$(seth --to-wei 1000000 ETH)")"
     seth send "$MCD_GOV" 'setAuthority(address)' "$MCD_GOV_GUARD"
     seth send "$FAUCET" 'gulp(address)' "$MCD_GOV"
